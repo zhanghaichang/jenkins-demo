@@ -24,40 +24,51 @@
 
 package com.dwring.springboot.controller;
 
+import java.net.InetAddress;
+import java.net.UnknownHostException;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import com.dwring.springboot.model.UserInfo;
 
 
- 
-/**  
-* @ClassName: UserInfoController  
-* @Description:  
-* @author haichangzhang  
-* @date 2017年7月26日 下午6:06:59  
-*    
-*/
+/**
+ * @ClassName: UserInfoController
+ * @Description:
+ * @author haichangzhang
+ * @date 2017年7月26日 下午6:06:59
+ * 
+ */
 @RestController
 @RequestMapping("/users")
 public class UserInfoController {
 
+	private Logger log = LoggerFactory.getLogger(UserInfoController.class);
 
-  
-    @RequestMapping(value = "/user")
-    public UserInfo load() {
-        UserInfo userInfo = new UserInfo();
-        userInfo.setId(1);
-        userInfo.setEmail("zhanghaichang@163.com");
-        userInfo.setRealname("zhanghaichang");
-        userInfo.setUsername("haichang");
-        userInfo.setTel("13585822222");
-        return userInfo;
-    }
+	@RequestMapping(value = "/user")
+	public UserInfo load() {
+		UserInfo userInfo = new UserInfo();
+		userInfo.setId(1);
+		userInfo.setEmail("zhanghaichang@163.com");
+		userInfo.setRealname("zhanghaichang");
+		userInfo.setUsername("haichang");
+		userInfo.setTel("13585822222");
+		log.info("===========userInfo:{0}",userInfo);
+		return userInfo;
+	}
 
-    @RequestMapping(value = "/hello")
-    public String hello() {
-        return "Hello World!";
-    }
+	@RequestMapping(value = "/hello")
+	public String hello() {
+		log.info("==============hello world============");
+		String host = null;
+        try {
+            host = InetAddress.getLocalHost().getHostAddress();
+        } catch (UnknownHostException e) {
+            log.error("get server host Exception e:", e);
+        }
+		return "Hello World! "+host;
+	}
 
-  
 }
